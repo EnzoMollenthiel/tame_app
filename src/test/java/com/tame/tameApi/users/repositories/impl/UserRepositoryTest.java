@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -79,6 +80,13 @@ public class UserRepositoryTest {
 
         assert actualUser != null;
         assertEquals("pseudo test", actualUser.getPseudo());
+    }
+
+    @Test
+    public void find_all_should_not_return_null() {
+        List<User> actualUsers = usersRepository.findAll();
+
+        assertNotNull(actualUsers);
     }
 
     @AfterEach
