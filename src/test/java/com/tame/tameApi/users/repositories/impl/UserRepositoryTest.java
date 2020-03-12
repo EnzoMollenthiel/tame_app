@@ -36,7 +36,7 @@ public class UserRepositoryTest {
         user.setAgeMin(80);
         user.setPhoneNumber("065235648987");
         user.setCity("Bordeaux");
-        user.setBirthDate(new Date());
+        user.setBirthDate(date);
         user.setDistance(15);
         user.setBeenDislikedNumber(0);
         user.setBeenLikedNumber(0);
@@ -45,6 +45,6 @@ public class UserRepositoryTest {
 
         User newUser = usersRepository.save(user);
 
-        assertNotNull(newUser);
+        assertNotNull(newUser.getId());
     }
 }
