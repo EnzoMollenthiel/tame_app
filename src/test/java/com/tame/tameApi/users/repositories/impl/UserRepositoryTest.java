@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -44,6 +45,6 @@ public class UserRepositoryTest {
 
         User newUser = usersRepository.save(user);
 
-        assertTrue(newUser != null);
+        assertNotNull(newUser);
     }
 }
