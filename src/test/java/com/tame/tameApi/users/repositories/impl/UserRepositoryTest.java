@@ -24,7 +24,7 @@ public class UserRepositoryTest {
     @Autowired
     private static UsersRepository usersRepository;
 
-    User user;
+    private User user;
 
     @BeforeEach
     void init() {
@@ -74,7 +74,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void find_by_id_should_return_user_pseudo() {
+    public void find_by_id_should_return_user_pseudo() {
         User actualUser = usersRepository.findUserById(this.user.getId());
 
         assert actualUser != null;
