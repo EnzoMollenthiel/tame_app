@@ -186,7 +186,7 @@ public class UsersDaoTest {
     }
 
     @Test
-    public void update_should_update_user_in_database() throws InvalidEmailFormatException {
+    public void update_should_update_user_in_database() throws InvalidEmailFormatException, ToYoungException {
         Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
 
         UserDtoIn userDtoIn = new UserDtoIn();
@@ -258,5 +258,29 @@ public class UsersDaoTest {
         userDtoIn.setDescription("test description");
 
         assertThrows(ToYoungException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
+    }
+
+    @Test
+    public void update_user_should_have_at_least_ten_years_difference_with_max_age_if_older() {
+        Date date = new GregorianCalendar(1980, Calendar.FEBRUARY, 11).getTime();
+
+        UserDtoIn userDtoIn = new UserDtoIn();
+        userDtoIn.setEmail("test@test.fr");
+        userDtoIn.setPseudo("pseudo");
+        userDtoIn.setPassword("super test password");
+        userDtoIn.setAgeMax(35);
+        userDtoIn.setAgeMin(30);
+        userDtoIn.setPhoneNumber("065235648987");
+        userDtoIn.setCity("Bordeaux");
+        userDtoIn.setBirthDate(date);
+        userDtoIn.setDistance(15);
+        userDtoIn.setBeenDislikedNumber(0);
+        userDtoIn.setBeenLikedNumber(0);
+        userDtoIn.setDidLikeNumber(0);
+        userDtoIn.setDidDislikeNumber(0);
+        userDtoIn.setMatchesNumber(0);
+        userDtoIn.setDescription("test description");
+
+        assertThrows(ToOldException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
     }
 }
