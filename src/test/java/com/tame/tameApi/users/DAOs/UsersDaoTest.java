@@ -63,7 +63,7 @@ public class UsersDaoTest {
     }
 
     @Test
-    public void save_should_create_a_new_user() throws InvalidEmailFormatException, ToYoungException {
+    public void save_should_create_a_new_user() throws InvalidEmailFormatException, ToYoungException, ToOldException {
         Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
 
         UserDtoIn userDtoIn = new UserDtoIn();
