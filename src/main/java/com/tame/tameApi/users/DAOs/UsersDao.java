@@ -28,6 +28,10 @@ public class UsersDao {
         User user = new User(userDtoIn);
         user.setId(id);
 
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
+        if(!user.getEmail().matches(regex)) throw new InvalidEmailFormatException();
+        
         return usersRepository.save(user);
     }
 }
