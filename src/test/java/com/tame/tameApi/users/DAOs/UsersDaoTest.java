@@ -2,6 +2,7 @@ package com.tame.tameApi.users.DAOs;
 
 import com.tame.tameApi.users.DTOs.UserDtoIn;
 import com.tame.tameApi.users.exceptions.InvalidEmailFormatException;
+import com.tame.tameApi.users.exceptions.NilIdException;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.junit.Test;
@@ -12,13 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,17 +53,11 @@ public class UsersDaoTest {
         this.user = usersRepository.save(user);
     }
 
-    @AfterEach
-    void clear() {
-        usersRepository.delete(this.user.getId());
-        this.user = null;
-    }
-
     @Test
     public void getById_should_return_a_user() {
         User foundUser = usersDao.getById(this.user.getId());
 
-        assertEquals("Should find and return a user by it's id", this.user, foundUser);
+        assertEquals("Should find and return a user by its id", this.user, foundUser);
     }
 
     @Test
@@ -90,6 +85,30 @@ public class UsersDaoTest {
 
         assertNotNull("Should create a new user from UserDtoIn object",
                 usersRepository.findUserByEmail(userDtoIn.getEmail()));
+    }
+
+    @Test
+    public void get_all_should_not_return_null() {
+        List<User> users = usersDao.getAll();
+        assertNotNull(users);
+    }
+
+    @Test
+    public void delete_should_not_find_user_after_delete() {
+        usersDao.deleteById(this.user.getId());
+        assertNull(usersDao.getById(this.user.getId()));
+    }
+
+    @Test(expected = NilIdException.class)
+    public void delete_should_throw_exception_if_id_does_not_exist() {
+        Long nilId = Long.parseLong("4345");
+        usersDao.deleteById(nilId);
+    }
+
+    @AfterEach
+    void clear() {
+        usersRepository.delete(this.user.getId());
+        this.user = null;
     }
 
     @Test
