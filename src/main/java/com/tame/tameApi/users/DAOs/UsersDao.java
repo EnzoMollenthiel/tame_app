@@ -25,6 +25,9 @@ public class UsersDao {
     }
 
     public User update(Long id, UserDtoIn userDtoIn) throws InvalidEmailFormatException {
-        return null;
+        User user = new User(userDtoIn);
+        user.setId(id);
+
+        return usersRepository.save(user);
     }
 }
