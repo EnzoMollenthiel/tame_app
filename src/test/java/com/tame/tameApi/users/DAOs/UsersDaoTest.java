@@ -1,6 +1,7 @@
 package com.tame.tameApi.users.DAOs;
 
 import com.tame.tameApi.users.DTOs.UserDtoIn;
+import com.tame.tameApi.users.exceptions.NilIdException;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.junit.Test;
@@ -94,6 +95,12 @@ public class UsersDaoTest {
     public void delete_should_not_find_user_after_delete() {
         usersDao.deleteById(this.user.getId());
         assertNull(usersDao.getById(this.user.getId()));
+    }
+
+    @Test(expected = NilIdException.class)
+    public void delete_should_throw_exception_if_id_does_not_exists() {
+        Long nilId = Long.parseLong("4345");
+        usersDao.deleteById(nilId);
     }
 
     @AfterEach
