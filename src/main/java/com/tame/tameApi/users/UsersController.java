@@ -11,8 +11,11 @@ import java.util.List;
 @RestController
 public class UsersController {
 
-    @Autowired
-    private UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
+
+    UsersController(@Autowired UsersRepository usersRepository){
+        this.usersRepository = usersRepository;
+    };
 
     @GetMapping("/users")
     List<User> getAll() {
