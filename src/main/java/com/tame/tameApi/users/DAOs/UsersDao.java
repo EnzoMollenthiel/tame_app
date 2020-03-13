@@ -3,8 +3,8 @@ package com.tame.tameApi.users.DAOs;
 import com.tame.tameApi.users.DTOs.UserDtoIn;
 import com.tame.tameApi.users.exceptions.InvalidEmailFormatException;
 import com.tame.tameApi.users.exceptions.NilIdException;
-import com.tame.tameApi.users.exceptions.ToOldException;
-import com.tame.tameApi.users.exceptions.ToYoungException;
+import com.tame.tameApi.users.exceptions.TooOldException;
+import com.tame.tameApi.users.exceptions.TooYoungException;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +23,21 @@ public class UsersDao {
         return usersRepository.findUserById(id);
     }
 
-    public User save(UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException, ToOldException {
+    public User save(UserDtoIn userDtoIn) throws InvalidEmailFormatException, TooYoungException, TooOldException {
         User user = new User(userDtoIn);
 
         long userAge = new Date().getYear() - user.getBirthDate().getYear();
 
         if(!user.getEmail().matches(EMAIL_REGEX)) throw new InvalidEmailFormatException();
         else if(user.getAgeMin() > userAge &&
-                ((user.getAgeMin() - userAge) < 10)) throw new ToYoungException();
+                ((user.getAgeMin() - userAge) < 10)) throw new TooYoungException();
         else if(user.getAgeMax() < userAge &&
-                ((userAge - user.getAgeMax()) < 10)) throw new ToOldException();
+                ((userAge - user.getAgeMax()) < 10)) throw new TooOldException();
 
         return usersRepository.save(user);
     }
 
-    public User update(Long id, UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException, ToOldException {
+    public User update(Long id, UserDtoIn userDtoIn) throws InvalidEmailFormatException, TooYoungException, TooOldException {
         User user = new User(userDtoIn);
         user.setId(id);
 
@@ -45,9 +45,9 @@ public class UsersDao {
 
         if(!user.getEmail().matches(EMAIL_REGEX)) throw new InvalidEmailFormatException();
         else if(user.getAgeMin() > userAge &&
-                ((user.getAgeMin() - userAge) < 10)) throw new ToYoungException();
+                ((user.getAgeMin() - userAge) < 10)) throw new TooYoungException();
         else if(user.getAgeMax() < userAge &&
-                ((userAge - user.getAgeMax()) < 10)) throw new ToOldException();
+                ((userAge - user.getAgeMax()) < 10)) throw new TooOldException();
 
         return usersRepository.save(user);
     }

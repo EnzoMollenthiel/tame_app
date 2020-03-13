@@ -3,8 +3,8 @@ package com.tame.tameApi.users;
 import com.tame.tameApi.users.DAOs.UsersDao;
 import com.tame.tameApi.users.DTOs.UserDtoIn;
 import com.tame.tameApi.users.exceptions.InvalidEmailFormatException;
-import com.tame.tameApi.users.exceptions.ToOldException;
-import com.tame.tameApi.users.exceptions.ToYoungException;
+import com.tame.tameApi.users.exceptions.TooOldException;
+import com.tame.tameApi.users.exceptions.TooYoungException;
 import com.tame.tameApi.users.models.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +21,12 @@ public class UsersController {
     }
 
     @PostMapping(value = "/user")
-    public User create(@RequestBody UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException, ToOldException {
+    public User create(@RequestBody UserDtoIn userDtoIn) throws InvalidEmailFormatException, TooYoungException, TooOldException {
         return usersDao.save(userDtoIn);
     }
 
     @PutMapping(value = "/user/{id}")
-    public User update(@PathVariable Long id, @RequestBody UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException, ToOldException {
+    public User update(@PathVariable Long id, @RequestBody UserDtoIn userDtoIn) throws InvalidEmailFormatException, TooYoungException, TooOldException {
         return usersDao.update(id, userDtoIn);
     }
 

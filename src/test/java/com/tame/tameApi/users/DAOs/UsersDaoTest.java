@@ -3,8 +3,8 @@ package com.tame.tameApi.users.DAOs;
 import com.tame.tameApi.users.DTOs.UserDtoIn;
 import com.tame.tameApi.users.exceptions.InvalidEmailFormatException;
 import com.tame.tameApi.users.exceptions.NilIdException;
-import com.tame.tameApi.users.exceptions.ToOldException;
-import com.tame.tameApi.users.exceptions.ToYoungException;
+import com.tame.tameApi.users.exceptions.TooOldException;
+import com.tame.tameApi.users.exceptions.TooYoungException;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.junit.Test;
@@ -63,7 +63,7 @@ public class UsersDaoTest {
     }
 
     @Test
-    public void save_should_create_a_new_user() throws InvalidEmailFormatException, ToYoungException, ToOldException {
+    public void save_should_create_a_new_user() throws InvalidEmailFormatException, TooYoungException, TooOldException {
         Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
 
         UserDtoIn userDtoIn = new UserDtoIn();
@@ -158,7 +158,7 @@ public class UsersDaoTest {
         userDtoIn.setMatchesNumber(0);
         userDtoIn.setDescription("test description");
 
-        assertThrows(ToYoungException.class, () -> usersDao.save(userDtoIn));
+        assertThrows(TooYoungException.class, () -> usersDao.save(userDtoIn));
     }
 
     @Test
@@ -182,11 +182,11 @@ public class UsersDaoTest {
         userDtoIn.setMatchesNumber(0);
         userDtoIn.setDescription("test description");
 
-        assertThrows(ToOldException.class, () -> usersDao.save(userDtoIn));
+        assertThrows(TooOldException.class, () -> usersDao.save(userDtoIn));
     }
 
     @Test
-    public void update_should_update_user_in_database() throws InvalidEmailFormatException, ToYoungException, ToOldException {
+    public void update_should_update_user_in_database() throws InvalidEmailFormatException, TooYoungException, TooOldException {
         Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
 
         UserDtoIn userDtoIn = new UserDtoIn();
@@ -257,7 +257,7 @@ public class UsersDaoTest {
         userDtoIn.setMatchesNumber(0);
         userDtoIn.setDescription("test description");
 
-        assertThrows(ToYoungException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
+        assertThrows(TooYoungException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
     }
 
     @Test
@@ -281,6 +281,6 @@ public class UsersDaoTest {
         userDtoIn.setMatchesNumber(0);
         userDtoIn.setDescription("test description");
 
-        assertThrows(ToOldException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
+        assertThrows(TooOldException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
     }
 }
