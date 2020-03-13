@@ -98,7 +98,7 @@ public class UsersDaoTest {
     }
 
     @Test(expected = NilIdException.class)
-    public void delete_should_throw_exception_if_id_does_not_exists() {
+    public void delete_should_throw_exception_if_id_does_not_exist() {
         Long nilId = Long.parseLong("4345");
         usersDao.deleteById(nilId);
     }
