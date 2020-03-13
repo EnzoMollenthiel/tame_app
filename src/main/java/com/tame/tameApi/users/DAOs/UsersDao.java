@@ -15,22 +15,7 @@ public class UsersDao {
     }
 
     public User save(UserDtoIn userDtoIn) {
-        User user = new User(null,
-                userDtoIn.getEmail(),
-                userDtoIn.getPseudo(),
-                userDtoIn.getPassword(),
-                userDtoIn.getPhoneNumber(),
-                userDtoIn.getBirthDate(),
-                userDtoIn.getAgeMax(),
-                userDtoIn.getAgeMin(),
-                userDtoIn.getDistance(),
-                userDtoIn.getMatchesNumber(),
-                userDtoIn.getBeenLikedNumber(),
-                userDtoIn.getBeenDislikedNumber(),
-                userDtoIn.getDidLikeNumber(),
-                userDtoIn.getDidDislikeNumber(),
-                userDtoIn.getDescription(),
-                userDtoIn.getCity());
+        User user = new User(userDtoIn);
 
         return usersRepository.save(user);
     }

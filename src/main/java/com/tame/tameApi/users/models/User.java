@@ -1,5 +1,6 @@
 package com.tame.tameApi.users.models;
 
+import com.tame.tameApi.users.DTOs.UserDtoIn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,25 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+
+    public User(UserDtoIn userDtoIn) {
+        this.id = null;
+        this.email = userDtoIn.getEmail();
+        this.pseudo = userDtoIn.getPseudo();
+        this.password = userDtoIn.getPassword();
+        this.phoneNumber = userDtoIn.getPhoneNumber();
+        this.birthDate = userDtoIn.getBirthDate();
+        this.ageMax = userDtoIn.getAgeMax();
+        this.ageMin = userDtoIn.getAgeMin();
+        this.distance = userDtoIn.getDistance();
+        this.matchesNumber = userDtoIn.getMatchesNumber();
+        this.beenLikedNumber = userDtoIn.getBeenLikedNumber();
+        this.beenDislikedNumber = userDtoIn.getBeenDislikedNumber();
+        this.didLikeNumber = userDtoIn.getDidLikeNumber();
+        this.didDislikeNumber = userDtoIn.getDidDislikeNumber();
+        this.description = userDtoIn.getDescription();
+        this.city = userDtoIn.getCity();
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
