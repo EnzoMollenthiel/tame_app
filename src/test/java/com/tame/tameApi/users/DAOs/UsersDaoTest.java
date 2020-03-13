@@ -21,6 +21,7 @@ public class UsersDaoTest {
     @Autowired
     private UsersRepository usersRepository;
 
+    private UsersDao usersDao = new UsersDao();
     private User user;
 
     @BeforeEach
@@ -53,7 +54,7 @@ public class UsersDaoTest {
 
     @Test
     public void getById_should_return_a_user() {
-        User foundUser = UsersDao.getById(this.user.getId());
+        User foundUser = usersDao.getById(this.user.getId());
 
         assertEquals("Should find and return a user by it's id", this.user, foundUser);
     }
