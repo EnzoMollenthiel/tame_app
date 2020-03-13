@@ -107,12 +107,6 @@ public class UsersDaoTest {
         usersDao.deleteById(nilId);
     }
 
-    @AfterEach
-    void clear() {
-        usersRepository.delete(this.user.getId());
-        this.user = null;
-    }
-
     @Test
     public void save_should_throw_Exception_if_email_has_invalid_format() {
         Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
@@ -282,5 +276,11 @@ public class UsersDaoTest {
         userDtoIn.setDescription("test description");
 
         assertThrows(TooOldException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
+    }
+
+    @AfterEach
+    void clear() {
+        usersRepository.delete(this.user.getId());
+        this.user = null;
     }
 }
