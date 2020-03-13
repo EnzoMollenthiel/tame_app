@@ -17,13 +17,10 @@ public class UsersDao {
 
     public User save(UserDtoIn userDtoIn) throws InvalidEmailFormatException {
         User user = new User(userDtoIn);
-
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
-        if (user.getEmail().matches(regex)) {
-            return usersRepository.save(user);
-        } else {
-            throw new InvalidEmailFormatException();
-        }
+        if(!user.getEmail().matches(regex)) throw new InvalidEmailFormatException();
+
+        return usersRepository.save(user);
     }
 }

@@ -113,7 +113,6 @@ public class UsersDaoTest {
         userDtoIn.setMatchesNumber(0);
         userDtoIn.setDescription("test description");
 
-
         assertThrows(InvalidEmailFormatException.class , () -> usersDao.save(userDtoIn));
     }
 }
