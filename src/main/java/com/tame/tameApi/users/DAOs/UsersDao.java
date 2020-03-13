@@ -18,6 +18,12 @@ public class UsersDao {
     public User save(UserDtoIn userDtoIn) throws InvalidEmailFormatException {
         User user = new User(userDtoIn);
 
-        return usersRepository.save(user);
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
+        if (user.getEmail().matches(regex)) {
+            return usersRepository.save(user);
+        } else {
+            throw new InvalidEmailFormatException();
+        }
     }
 }

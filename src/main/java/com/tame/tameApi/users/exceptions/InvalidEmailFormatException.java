@@ -2,7 +2,7 @@ package com.tame.tameApi.users.exceptions;
 
 public class InvalidEmailFormatException extends Exception {
 
-    InvalidEmailFormatException() {
+    public InvalidEmailFormatException() {
         super("Invalid Email format");
     }
 }
