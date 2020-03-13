@@ -113,7 +113,7 @@ public class UsersDaoTest {
         userDtoIn.setMatchesNumber(0);
         userDtoIn.setDescription("test description");
 
-        assertThrows(InvalidEmailFormatException.class , () -> usersDao.save(userDtoIn));
+        assertThrows(InvalidEmailFormatException.class, () -> usersDao.save(userDtoIn));
     }
 
     @Test
@@ -142,5 +142,28 @@ public class UsersDaoTest {
         assertEquals("Should update a user from UserDtoIn object",
                 this.user.getId(),
                 usersRepository.findUserByEmail(userDtoIn.getEmail()).getId());
+    }
+
+    public void update_should_throw_Exception_if_email_has_invalid_format() throws InvalidEmailFormatException {
+        Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
+
+        UserDtoIn userDtoIn = new UserDtoIn();
+        userDtoIn.setEmail("tata");
+        userDtoIn.setPseudo("pseudo");
+        userDtoIn.setPassword("super test password");
+        userDtoIn.setAgeMax(90);
+        userDtoIn.setAgeMin(80);
+        userDtoIn.setPhoneNumber("065235648987");
+        userDtoIn.setCity("Bordeaux");
+        userDtoIn.setBirthDate(date);
+        userDtoIn.setDistance(15);
+        userDtoIn.setBeenDislikedNumber(0);
+        userDtoIn.setBeenLikedNumber(0);
+        userDtoIn.setDidLikeNumber(0);
+        userDtoIn.setDidDislikeNumber(0);
+        userDtoIn.setMatchesNumber(0);
+        userDtoIn.setDescription("test description");
+
+        assertThrows(InvalidEmailFormatException.class, () -> usersDao.update(this.user.getId(), userDtoIn));
     }
 }
