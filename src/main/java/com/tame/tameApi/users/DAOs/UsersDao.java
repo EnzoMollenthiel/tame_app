@@ -11,15 +11,16 @@ public class UsersDao {
     @Autowired
     UsersRepository usersRepository;
 
+    private static final String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
     public User getById(Long id) {
         return usersRepository.findUserById(id);
     }
 
     public User save(UserDtoIn userDtoIn) throws InvalidEmailFormatException {
         User user = new User(userDtoIn);
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
-        if(!user.getEmail().matches(regex)) throw new InvalidEmailFormatException();
+        if(!user.getEmail().matches(EMAIL_REGEX)) throw new InvalidEmailFormatException();
 
         return usersRepository.save(user);
     }
@@ -28,10 +29,8 @@ public class UsersDao {
         User user = new User(userDtoIn);
         user.setId(id);
 
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        if(!user.getEmail().matches(EMAIL_REGEX)) throw new InvalidEmailFormatException();
 
-        if(!user.getEmail().matches(regex)) throw new InvalidEmailFormatException();
-        
         return usersRepository.save(user);
     }
 }
