@@ -3,6 +3,7 @@ package com.tame.tameApi.users.DAOs;
 import com.tame.tameApi.users.DTOs.UserDtoIn;
 import com.tame.tameApi.users.exceptions.InvalidEmailFormatException;
 import com.tame.tameApi.users.exceptions.NilIdException;
+import com.tame.tameApi.users.exceptions.ToOldException;
 import com.tame.tameApi.users.exceptions.ToYoungException;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
@@ -22,7 +23,7 @@ public class UsersDao {
         return usersRepository.findUserById(id);
     }
 
-    public User save(UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException {
+    public User save(UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException, ToOldException {
         User user = new User(userDtoIn);
 
         long userAge = new Date().getYear() - user.getBirthDate().getYear();
@@ -30,6 +31,8 @@ public class UsersDao {
         if(!user.getEmail().matches(EMAIL_REGEX)) throw new InvalidEmailFormatException();
         else if(user.getAgeMin() > userAge &&
                 ((user.getAgeMin() - userAge) < 10)) throw new ToYoungException();
+        else if(user.getAgeMax() < userAge &&
+                ((userAge - user.getAgeMax()) < 10)) throw new ToOldException();
 
         return usersRepository.save(user);
     }
