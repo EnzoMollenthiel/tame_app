@@ -25,4 +25,8 @@ public class UsersDao {
     public List<User> getAll() {
         return usersRepository.findAll();
     }
+
+    public void deleteById(Long id) {
+        usersRepository.delete(id);
+    }
 }

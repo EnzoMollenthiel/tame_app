@@ -11,13 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -89,6 +88,11 @@ public class UsersDaoTest {
     public void get_all_should_not_return_null() {
         List<User> users = usersDao.getAll();
         assertNotNull(users);
+    }
+
+    @Test public void delete_should_not_find_user_after_delete() {
+        usersDao.deleteById(this.user.getId());
+        assertNull(usersDao.getById(this.user.getId()));
     }
 
     @AfterEach
