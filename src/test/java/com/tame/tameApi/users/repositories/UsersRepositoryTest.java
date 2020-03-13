@@ -1,7 +1,6 @@
-package com.tame.tameApi.users.repositories.impl;
+package com.tame.tameApi.users.repositories;
 
 import com.tame.tameApi.users.models.User;
-import com.tame.tameApi.users.repositories.UsersRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -20,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserRepositoryTest {
+public class UsersRepositoryTest {
 
     @Autowired
     private static UsersRepository usersRepository;
 
-    User user;
+    private User user;
 
     @BeforeEach
     void init() {
@@ -75,11 +75,18 @@ public class UserRepositoryTest {
     }
 
     @Test
-    void find_by_id_should_return_user_pseudo() {
+    public void find_by_id_should_return_user_pseudo() {
         User actualUser = usersRepository.findUserById(this.user.getId());
 
         assert actualUser != null;
         assertEquals("pseudo test", actualUser.getPseudo());
+    }
+
+    @Test
+    public void find_all_should_not_return_null() {
+        List<User> actualUsers = usersRepository.findAll();
+
+        assertNotNull(actualUsers);
     }
 
     @Test
