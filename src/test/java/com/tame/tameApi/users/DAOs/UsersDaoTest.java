@@ -3,6 +3,7 @@ package com.tame.tameApi.users.DAOs;
 import com.tame.tameApi.users.DTOs.UserDtoIn;
 import com.tame.tameApi.users.exceptions.InvalidEmailFormatException;
 import com.tame.tameApi.users.exceptions.NilIdException;
+import com.tame.tameApi.users.exceptions.ToYoungException;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.junit.Test;
@@ -133,6 +134,30 @@ public class UsersDaoTest {
         userDtoIn.setDescription("test description");
 
         assertThrows(InvalidEmailFormatException.class, () -> usersDao.save(userDtoIn));
+    }
+
+    @Test
+    public void save_user_should_have_at_least_ten_years_difference_with_min_age_if_younger() {
+        Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
+
+        UserDtoIn userDtoIn = new UserDtoIn();
+        userDtoIn.setEmail("test@test.fr");
+        userDtoIn.setPseudo("pseudo");
+        userDtoIn.setPassword("super test password");
+        userDtoIn.setAgeMax(40);
+        userDtoIn.setAgeMin(35);
+        userDtoIn.setPhoneNumber("065235648987");
+        userDtoIn.setCity("Bordeaux");
+        userDtoIn.setBirthDate(date);
+        userDtoIn.setDistance(15);
+        userDtoIn.setBeenDislikedNumber(0);
+        userDtoIn.setBeenLikedNumber(0);
+        userDtoIn.setDidLikeNumber(0);
+        userDtoIn.setDidDislikeNumber(0);
+        userDtoIn.setMatchesNumber(0);
+        userDtoIn.setDescription("test description");
+
+        assertThrows(ToYoungException.class, () -> usersDao.save(userDtoIn));
     }
 
     @Test
