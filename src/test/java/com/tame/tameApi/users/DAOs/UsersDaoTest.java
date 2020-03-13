@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,17 +51,11 @@ public class UsersDaoTest {
         this.user = usersRepository.save(user);
     }
 
-    @AfterEach
-    void clear() {
-        usersRepository.delete(this.user.getId());
-        this.user = null;
-    }
-
     @Test
     public void getById_should_return_a_user() {
         User foundUser = usersDao.getById(this.user.getId());
 
-        assertEquals("Should find and return a user by it's id", this.user, foundUser);
+        assertEquals("Should find and return a user by its id", this.user, foundUser);
     }
 
     @Test
@@ -88,5 +83,17 @@ public class UsersDaoTest {
 
         assertNotNull("Should create a new user from UserDtoIn object",
                 usersRepository.findUserByEmail(userDtoIn.getEmail()));
+    }
+
+    @Test
+    public void get_all_should_not_return_null() {
+        List<User> users = usersDao.getAll();
+        assertNotNull(users);
+    }
+
+    @AfterEach
+    void clear() {
+        usersRepository.delete(this.user.getId());
+        this.user = null;
     }
 }

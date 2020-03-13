@@ -5,6 +5,8 @@ import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class UsersDao {
 
     @Autowired
@@ -18,5 +20,9 @@ public class UsersDao {
         User user = new User(userDtoIn);
 
         return usersRepository.save(user);
+    }
+
+    public List<User> getAll() {
+        return usersRepository.findAll();
     }
 }
