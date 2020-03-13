@@ -90,7 +90,8 @@ public class UsersDaoTest {
         assertNotNull(users);
     }
 
-    @Test public void delete_should_not_find_user_after_delete() {
+    @Test
+    public void delete_should_not_find_user_after_delete() {
         usersDao.deleteById(this.user.getId());
         assertNull(usersDao.getById(this.user.getId()));
     }
