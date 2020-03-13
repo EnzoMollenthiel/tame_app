@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -79,6 +80,12 @@ public class UserRepositoryTest {
 
         assert actualUser != null;
         assertEquals("pseudo test", actualUser.getPseudo());
+    }
+
+    @Test
+    void delete_should_delete_user_in_database() {
+        usersRepository.delete(this.user.getId());
+        assertNull(usersRepository.findUserById(this.user.getId()));
     }
 
     @AfterEach
