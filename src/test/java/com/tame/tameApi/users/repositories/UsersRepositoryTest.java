@@ -83,6 +83,13 @@ public class UsersRepositoryTest {
     }
 
     @Test
+    public void find_by_email_should_return_user() {
+        User actualUser = usersRepository.findUserByEmail(this.user.getEmail());
+
+        assertNotNull("Should find a user by its email", actualUser);
+    }
+
+    @Test
     public void find_all_should_not_return_null() {
         List<User> actualUsers = usersRepository.findAll();
 
