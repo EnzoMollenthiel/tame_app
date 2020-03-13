@@ -1,5 +1,6 @@
 package com.tame.tameApi.users.DAOs;
 
+import com.tame.tameApi.users.DTOs.UserDtoIn;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.junit.Test;
@@ -11,8 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,5 +61,32 @@ public class UsersDaoTest {
         User foundUser = usersDao.getById(this.user.getId());
 
         assertEquals("Should find and return a user by it's id", this.user, foundUser);
+    }
+
+    @Test
+    public void save_should_create_a_new_user() {
+        Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
+
+        UserDtoIn userDtoIn = new UserDtoIn();
+        userDtoIn.setEmail("test@test.fr");
+        userDtoIn.setPseudo("pseudo");
+        userDtoIn.setPassword("super test password");
+        userDtoIn.setAgeMax(90);
+        userDtoIn.setAgeMin(80);
+        userDtoIn.setPhoneNumber("065235648987");
+        userDtoIn.setCity("Bordeaux");
+        userDtoIn.setBirthDate(date);
+        userDtoIn.setDistance(15);
+        userDtoIn.setBeenDislikedNumber(0);
+        userDtoIn.setBeenLikedNumber(0);
+        userDtoIn.setDidLikeNumber(0);
+        userDtoIn.setDidDislikeNumber(0);
+        userDtoIn.setMatchesNumber(0);
+        userDtoIn.setDescription("test description");
+
+        usersDao.save(userDtoIn);
+
+        assertNotNull("Should create a new user from UserDtoIn object",
+                usersRepository.findUserByEmail(userDtoIn.getEmail()));
     }
 }
