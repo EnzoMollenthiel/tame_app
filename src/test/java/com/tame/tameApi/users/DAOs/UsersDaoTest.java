@@ -186,7 +186,7 @@ public class UsersDaoTest {
     }
 
     @Test
-    public void update_should_update_user_in_database() throws InvalidEmailFormatException, ToYoungException {
+    public void update_should_update_user_in_database() throws InvalidEmailFormatException, ToYoungException, ToOldException {
         Date date = new GregorianCalendar(1990, Calendar.FEBRUARY, 11).getTime();
 
         UserDtoIn userDtoIn = new UserDtoIn();

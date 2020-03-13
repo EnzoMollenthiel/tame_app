@@ -37,7 +37,7 @@ public class UsersDao {
         return usersRepository.save(user);
     }
 
-    public User update(Long id, UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException {
+    public User update(Long id, UserDtoIn userDtoIn) throws InvalidEmailFormatException, ToYoungException, ToOldException {
         User user = new User(userDtoIn);
         user.setId(id);
 
@@ -46,6 +46,8 @@ public class UsersDao {
         if(!user.getEmail().matches(EMAIL_REGEX)) throw new InvalidEmailFormatException();
         else if(user.getAgeMin() > userAge &&
                 ((user.getAgeMin() - userAge) < 10)) throw new ToYoungException();
+        else if(user.getAgeMax() < userAge &&
+                ((userAge - user.getAgeMax()) < 10)) throw new ToOldException();
 
         return usersRepository.save(user);
     }
