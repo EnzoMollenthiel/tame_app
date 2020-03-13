@@ -1,11 +1,16 @@
 package com.tame.tameApi.users.DAOs;
 
 import com.tame.tameApi.users.models.User;
+import com.tame.tameApi.users.repositories.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class UsersDao {
 
+    @Autowired
+    UsersRepository usersRepository;
+
     public User getById(Long id) {
-        return null;
+        return usersRepository.findUserById(id);
     }
 
 }
