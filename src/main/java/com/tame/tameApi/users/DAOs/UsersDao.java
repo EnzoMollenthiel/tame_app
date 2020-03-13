@@ -1,6 +1,7 @@
 package com.tame.tameApi.users.DAOs;
 
 import com.tame.tameApi.users.DTOs.UserDtoIn;
+import com.tame.tameApi.users.exceptions.NilIdException;
 import com.tame.tameApi.users.models.User;
 import com.tame.tameApi.users.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class UsersDao {
     }
 
     public void deleteById(Long id) {
+        User foundUser = this.getById(id);
+        if (foundUser == null) throw new NilIdException();
         usersRepository.delete(id);
+
     }
 }
